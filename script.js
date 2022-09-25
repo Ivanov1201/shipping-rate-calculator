@@ -87,7 +87,8 @@ $("#main_form").submit(function (e) {
       AccessLicenseNumber: "",
       Username: "",
       Password: "",
-      contentType: "application/json"
+      contentType: "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
 
     data: JSON.stringify(requestBody),
