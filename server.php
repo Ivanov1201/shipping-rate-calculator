@@ -25,12 +25,10 @@ function CallAPI($method, $url, $requestHeader, $requestBody = false)
     curl_setopt($curl, CURLOPT_URL, $url);
 
     $result = curl_exec($curl);
-
     curl_close($curl);
 
     return $result;
 }
-
 
 function get_ups_rate() {
   global $param;
@@ -53,11 +51,20 @@ function get_ups_rate() {
     "contentType: application/json",
   );
   $response = CallAPI("POST", $UPS_API_ENDPOINT, $requestHeader, json_encode($requestBody));
-  return $response;
 }
 
 function get_fedex_rate() {
-  return "FEDEX";
+  global $param;
+  $requestBody = json_decode(file_get_contents('Fedex.json'));
+  $requestBody->accountNumber->value = "NEED_TO_BE_UPDATED";
+  $requestBody->requestedShipment->requestedPackageLineItems[0]->weight->value = $param['weight'];
+  $requestHeader = array (
+    "contentType: application/json",
+    "authorization: NEED_TO_BE_UPDATED"
+  );
+  $FEDEX_API_ENDPOINT = "https://apis.fedex.com/rate/v1/rates/quotes";
+  $response = CallAPI("POST", $FEDEX_API_ENDPOINT, $requestHeader, json_encode($requestBody));
+
 }
 
 function get_ground_rate() {
@@ -67,12 +74,10 @@ function get_ground_rate() {
 $method = $param['method'];
 $result = null;
 if ($method == 0) {
-  $result = get_ups_rate();
+  get_ups_rate();
 } else if ($method == 1) {
-  $result = get_fedex_rate();
+  get_fedex_rate();
 } else if ($method == 2) {
-  $result = get_ground_rate();
+  get_ground_rate();
 }
-
-echo $result;
 ?>
