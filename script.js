@@ -27,6 +27,7 @@ $("#main_form").submit(function (e) {
     },
     success: function (result) {
       let response = JSON.parse(result);
+      console.log(response);
       handle_response(method, response);
     },
     error: function (error) {
