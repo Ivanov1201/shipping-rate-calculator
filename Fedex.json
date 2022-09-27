@@ -1,0 +1,32 @@
+{
+  "accountNumber": {
+    "value": "NEED_TO_BE_UPDATED"
+  },
+  "requestedShipment": {
+    "shipper": {
+      "address": {
+        "postalCode": 65247,
+        "countryCode": "US"
+      }
+    },
+    "recipient": {
+      "address": {
+        "postalCode": 75063,
+        "countryCode": "US"
+      }
+    },
+    "pickupType": "DROPOFF_AT_FEDEX_LOCATION",
+    "rateRequestType": [
+      "ACCOUNT",
+      "LIST"
+    ],
+    "requestedPackageLineItems": [
+      {
+        "weight": {
+          "units": "LB",
+          "value": 10
+        }
+      }
+    ]
+  }
+}
