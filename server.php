@@ -33,8 +33,16 @@ function CallAPI($method, $url, $requestHeader, $requestBody = false)
 function get_ups_rate() {
   global $param;
   $requestBody = json_decode(file_get_contents('UPS.json'));
-  $requestBody->RateRequest->Shipment->ShipTo->Address->AddressLine = $param['ShipTo'];
-  $requestBody->RateRequest->Shipment->ShipFrom->Address->AddressLine = $param['ShipFrom'];
+  $requestBody->RateRequest->Shipment->ShipFrom->Address->AddressLine = $param['AddressLine_from'];
+  $requestBody->RateRequest->Shipment->ShipFrom->Address->City = $param['City_From'];
+  $requestBody->RateRequest->Shipment->ShipFrom->Address->StateProvinceCode = $param['StateProvinceCode_From'];
+  $requestBody->RateRequest->Shipment->ShipFrom->Address->PostalCode = $param['PostalCode_From'];
+  
+  $requestBody->RateRequest->Shipment->ShipTo->Address->AddressLine = $param['AddressLine_To'];
+  $requestBody->RateRequest->Shipment->ShipTo->Address->City = $param['City_To'];
+  $requestBody->RateRequest->Shipment->ShipTo->Address->StateProvinceCode = $param['StateProvinceCode_To'];
+  $requestBody->RateRequest->Shipment->ShipTo->Address->PostalCode = $param['PostalCode_To'];
+
   $requestBody->RateRequest->Shipment->ShipmentTotalWeight->Weight = $param['weight'];
   $requestBody->RateRequest->Shipment->Package->Dimensions->Height = $param['Height'];
   $requestBody->RateRequest->Shipment->Package->Dimensions->Length = $param['Length'];
@@ -57,6 +65,8 @@ function get_fedex_rate() {
   global $param;
   $requestBody = json_decode(file_get_contents('Fedex.json'));
   $requestBody->accountNumber->value = "NEED_TO_BE_UPDATED";
+  $requestBody->requestedShipment->shipper->address->postalCode = $param['PostalCode_From'];
+  $requestBody->requestedShipment->recipient->address->postalCode = $param['PostalCode_To'];
   $requestBody->requestedShipment->requestedPackageLineItems[0]->weight->value = $param['weight'];
   $requestHeader = array (
     "contentType: application/json",

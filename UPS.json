@@ -14,10 +14,10 @@
         "Name": "Trade Show Solutions",
         "ShipperNumber": " ",
         "Address": {
-          "AddressLine": "13188 Cardinal Creek Road",
-          "City": "Eden Prairie",
-          "StateProvinceCode": "MN",
-          "PostalCode": "55346",
+          "AddressLine": "",
+          "City": "",
+          "StateProvinceCode": "",
+          "PostalCode": "",
           "CountryCode": "US"
         }
       },
