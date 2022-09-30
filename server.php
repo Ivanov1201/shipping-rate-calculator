@@ -63,9 +63,7 @@ function get_ups_rate() {
   echo $response;
 }
 
-function get_fedex_rate() {
-  global $param;
-
+function get_fedex_token() {
   $FEDEX_AUTH_REQUEST_TOKEN = "https://apis-sandbox.fedex.com/oauth/token";
   $auth_requestHeader = array (
     "contentType: application/x-www-form-urlencoded"
@@ -73,8 +71,25 @@ function get_fedex_rate() {
   // you can update client_id and client_secret here;
   $auth_requestBody = "grant_type=csp_credentials&client_id=NEED_TO_BE_UPDATED&client_secret=NEED_TO_BE_UPDATED";
   $response = CallAPI("POST", $FEDEX_AUTH_REQUEST_TOKEN, $auth_requestHeader, json_encode($auth_requestBody));
+  return json_decode($response)->access_token;
+}
 
-  $token = json_decode($response)->access_token;
+function test_fedex_token() {
+  $FEDEX_AUTH_REQUEST_TOKEN = "https://apis-sandbox.fedex.com/oauth/token";
+  $auth_requestHeader = array (
+    "contentType: application/x-www-form-urlencoded"
+  );
+  // you can update client_id and client_secret here;
+  $auth_requestBody = "grant_type=csp_credentials&client_id=NEED_TO_BE_UPDATED&client_secret=NEED_TO_BE_UPDATED";
+  $response = CallAPI("POST", $FEDEX_AUTH_REQUEST_TOKEN, $auth_requestHeader, json_encode($auth_requestBody));
+  echo $response;
+}
+
+
+function get_fedex_rate() {
+  global $param;
+ 
+  $token = get_fedex_token();
 
   $requestBody = json_decode(file_get_contents('Fedex.json'));
   $requestBody->accountNumber->value = "NEED_TO_BE_UPDATED";
@@ -102,5 +117,7 @@ if ($method == 0) {
   get_fedex_rate();
 } else if ($method == 2) {
   get_ground_rate();
+} else if ($method == 3) {
+  test_fedex_token();
 }
 ?>

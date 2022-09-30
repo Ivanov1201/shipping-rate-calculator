@@ -53,3 +53,22 @@ function handle_response(method, response) {
   }
   $("#price").val(result);
 }
+
+/// Test script ///
+$("#token_access_btn").click(function () {
+  $.ajax({
+    method: "POST",
+    url: "server.php",
+    data: {
+      method: 3 // this means we request fedex token
+    },
+    success: function (result) {
+      let response = JSON.parse(result);
+      console.log(response);
+      
+    },
+    error: function (error) {
+      console.log("ERROR:", error);
+    }
+  });
+})
