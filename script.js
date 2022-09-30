@@ -47,7 +47,7 @@ function handle_response(method, response) {
   if (method == 0) {
     result = response?.RateResponse?.RatedShipment?.TotalCharges?.MonetaryValue || '';
   } else if(method == 1) {
-    result = "FEDEX";
+    result = response?.output?.rateReplyDetails[0]?.ratedShipmentDetails[0]?.totalNetFedExCharge || '';
   } else if (method == 2) {
     result = 0;
   }

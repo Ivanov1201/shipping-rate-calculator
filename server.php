@@ -69,20 +69,13 @@ function get_fedex_token() {
     "contentType: application/x-www-form-urlencoded"
   );
   // you can update client_id and client_secret here;
-  $auth_requestBody = "grant_type=csp_credentials&client_id=NEED_TO_BE_UPDATED&client_secret=NEED_TO_BE_UPDATED";
+  $auth_requestBody = "grant_type=client_credentials&client_id=NEED_TO_BE_UPDATED&client_secret=NEED_TO_BE_UPDATED";
   $response = CallAPI("POST", $FEDEX_AUTH_REQUEST_TOKEN, $auth_requestHeader, $auth_requestBody);
   return json_decode($response)->access_token;
 }
 
 function test_fedex_token() {
-  $FEDEX_AUTH_REQUEST_TOKEN = "https://apis-sandbox.fedex.com/oauth/token";
-  $auth_requestHeader = array (
-    "contentType: application/x-www-form-urlencoded"
-  );
-  // you can update client_id and client_secret here;
-  $auth_requestBody = "grant_type=client_credentials&client_id=NEED_TO_BE_UPDATED&client_secret=NEED_TO_BE_UPDATED";
-  $response = CallAPI("POST", $FEDEX_AUTH_REQUEST_TOKEN, $auth_requestHeader, $auth_requestBody);
-  echo $response;
+  echo get_fedex_token();
 }
 
 
