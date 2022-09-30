@@ -70,7 +70,7 @@ function get_fedex_token() {
   );
   // you can update client_id and client_secret here;
   $auth_requestBody = "grant_type=csp_credentials&client_id=NEED_TO_BE_UPDATED&client_secret=NEED_TO_BE_UPDATED";
-  $response = CallAPI("POST", $FEDEX_AUTH_REQUEST_TOKEN, $auth_requestHeader, json_encode($auth_requestBody));
+  $response = CallAPI("POST", $FEDEX_AUTH_REQUEST_TOKEN, $auth_requestHeader, $auth_requestBody);
   return json_decode($response)->access_token;
 }
 
@@ -80,8 +80,8 @@ function test_fedex_token() {
     "contentType: application/x-www-form-urlencoded"
   );
   // you can update client_id and client_secret here;
-  $auth_requestBody = "grant_type=csp_credentials&client_id=NEED_TO_BE_UPDATED&client_secret=NEED_TO_BE_UPDATED";
-  $response = CallAPI("POST", $FEDEX_AUTH_REQUEST_TOKEN, $auth_requestHeader, json_encode($auth_requestBody));
+  $auth_requestBody = "grant_type=client_credentials&client_id=NEED_TO_BE_UPDATED&client_secret=NEED_TO_BE_UPDATED";
+  $response = CallAPI("POST", $FEDEX_AUTH_REQUEST_TOKEN, $auth_requestHeader, $auth_requestBody);
   echo $response;
 }
 
