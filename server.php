@@ -21,12 +21,13 @@ function CallAPI($method, $url, $requestHeader, $requestBody = false)
 
     // Optional Authentication:
     curl_setopt($curl, CURLOPT_HTTPHEADER, $requestHeader);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
     curl_setopt($curl, CURLOPT_URL, $url);
 
     $result = curl_exec($curl);
-    curl_close($curl);
 
+    curl_close($curl);
     return $result;
 }
 
@@ -59,10 +60,22 @@ function get_ups_rate() {
     "contentType: application/json",
   );
   $response = CallAPI("POST", $UPS_API_ENDPOINT, $requestHeader, json_encode($requestBody));
+  echo $response;
 }
 
 function get_fedex_rate() {
   global $param;
+
+  $FEDEX_AUTH_REQUEST_TOKEN = "https://apis-sandbox.fedex.com/oauth/token";
+  $auth_requestHeader = array (
+    "contentType: application/x-www-form-urlencoded"
+  );
+  // you can update client_id and client_secret here;
+  $auth_requestBody = "grant_type=csp_credentials&client_id=NEED_TO_BE_UPDATED&client_secret=NEED_TO_BE_UPDATED";
+  $response = CallAPI("POST", $FEDEX_AUTH_REQUEST_TOKEN, $auth_requestHeader, json_encode($auth_requestBody));
+
+  $token = json_decode($response)->access_token;
+
   $requestBody = json_decode(file_get_contents('Fedex.json'));
   $requestBody->accountNumber->value = "NEED_TO_BE_UPDATED";
   $requestBody->requestedShipment->shipper->address->postalCode = $param['PostalCode_From'];
@@ -70,15 +83,15 @@ function get_fedex_rate() {
   $requestBody->requestedShipment->requestedPackageLineItems[0]->weight->value = $param['weight'];
   $requestHeader = array (
     "contentType: application/json",
-    "authorization: NEED_TO_BE_UPDATED"
+    "authorization: Bearer ".$token
   );
-  $FEDEX_API_ENDPOINT = "https://apis.fedex.com/rate/v1/rates/quotes";
+  $FEDEX_API_ENDPOINT = "https://apis-sandbox.fedex.com/rate/v1/rates/quotes";
   $response = CallAPI("POST", $FEDEX_API_ENDPOINT, $requestHeader, json_encode($requestBody));
-
+  echo $response;
 }
 
 function get_ground_rate() {
-  return 0;
+  echo 0;
 }
 
 $method = $param['method'];
