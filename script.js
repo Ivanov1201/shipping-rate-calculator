@@ -15,7 +15,8 @@ $("#main_form").submit(function (e) {
 
   $.ajax({
     method: "POST",
-    url: "server.php",
+    // url: "server.php",
+    url: "https://cors-everywhere-1.herokuapp.com/https://dev.extrahelp.us/shipcalc/server.php",
     data: {
       AddressLine_from: $("#AddressLine_From").val(),
       City_From: $("#City_From").val(),
@@ -42,17 +43,43 @@ $("#main_form").submit(function (e) {
   });
 });
 
+$("input:radio[name='ShipMethod']").change(function() {
+  if ($(this).attr('id') == "FedEx") {
+    $("#service_method_wrapper").show();
+  } else {
+    $("#service_method_wrapper").hide();
+  }
+});
+
+// $("input:radio[name='fedex_service_type']").change(function() {
+//   handle_fedex_response();
+// });
+
+let fedex_response = null;
+
 function handle_response(method, response) {
+  $("#service_method_wrapper").hide();
   let result;
   if (method == 0) {
     result = response?.RateResponse?.RatedShipment?.TotalCharges?.MonetaryValue || '';
   } else if(method == 1) {
-    result = response?.output?.rateReplyDetails[0]?.ratedShipmentDetails[0]?.totalNetFedExCharge || '';
+    $("#service_method_wrapper").show();
+    fedex_response = response?.output?.rateReplyDetails;
+    result = handle_fedex_response();
   } else if (method == 2) {
     result = 0;
   }
   $("#price").val(result);
 }
+
+function handle_fedex_response() {
+  let fedex_service_types  = ['fedex_fo', 'fedex_fpo', 'fedex_fso', 'fedex_f2a', 'fedex_f2', 'fedex_fes', 'fedex_fg'];
+  let service_type = $("input:radio[name='fedex_service_type']:checked").attr('id');
+  let fedex_service_type_id = fedex_service_types.indexOf(service_type);
+  return (fedex_service_type_id >= 0) ? fedex_response[fedex_service_type_id].ratedShipmentDetails[0].totalNetFedExCharge : '';
+}
+
+
 
 /// Test script ///
 $("#token_access_btn").click(function () {

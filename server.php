@@ -90,7 +90,7 @@ function get_fedex_rate() {
   $requestBody->requestedShipment->recipient->address->postalCode = $param['PostalCode_To'];
   $requestBody->requestedShipment->requestedPackageLineItems[0]->weight->value = $param['weight'];
   $requestHeader = array (
-    "contentType: application/json",
+    "Content-Type: application/json",
     "authorization: Bearer ".$token
   );
   $FEDEX_API_ENDPOINT = "https://apis-sandbox.fedex.com/rate/v1/rates/quotes";
