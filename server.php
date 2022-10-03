@@ -66,7 +66,7 @@ function get_ups_rate() {
 function get_fedex_token() {
   $FEDEX_AUTH_REQUEST_TOKEN = "https://apis-sandbox.fedex.com/oauth/token";
   $auth_requestHeader = array (
-    "contentType: application/x-www-form-urlencoded"
+    "Content-Type: application/x-www-form-urlencoded"
   );
   // you can update client_id and client_secret here;
   $auth_requestBody = "grant_type=client_credentials&client_id=NEED_TO_BE_UPDATED&client_secret=NEED_TO_BE_UPDATED";

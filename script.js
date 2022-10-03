@@ -6,6 +6,7 @@ $("#main_form").submit(function (e) {
     method = 0; // UPS
   } else if ($("#FedEx").prop("checked")) {
     method = 1; //FeDex
+    fedex_response = null;
   } else if ($("#Ground").prop("checked")){
     method = 2; //Ground
   } else {
@@ -15,8 +16,8 @@ $("#main_form").submit(function (e) {
 
   $.ajax({
     method: "POST",
-    url: "server.php",
-    // url: "https://cors-everywhere-1.herokuapp.com/https://dev.extrahelp.us/shipcalc/server.php",
+    // url: "server.php",
+    url: "https://cors-everywhere-1.herokuapp.com/https://dev.extrahelp.us/shipcalc/server.php",
     data: {
       AddressLine_from: $("#AddressLine_From").val(),
       City_From: $("#City_From").val(),
@@ -51,9 +52,9 @@ $("input:radio[name='ShipMethod']").change(function() {
   }
 });
 
-// $("input:radio[name='fedex_service_type']").change(function() {
-//   handle_fedex_response();
-// });
+$("#service_method_wrapper").change(function() {
+  handle_fedex_response();
+});
 
 let fedex_response = null;
 
@@ -73,13 +74,12 @@ function handle_response(method, response) {
 }
 
 function handle_fedex_response() {
+  if (!fedex_response) return;
   let fedex_service_types  = ['fedex_fo', 'fedex_fpo', 'fedex_fso', 'fedex_f2a', 'fedex_f2', 'fedex_fes', 'fedex_fg'];
-  let service_type = $("input:radio[name='fedex_service_type']:checked").attr('id');
+  let service_type = $("#service_method_wrapper").val();
   let fedex_service_type_id = fedex_service_types.indexOf(service_type);
   return (fedex_service_type_id >= 0) ? fedex_response[fedex_service_type_id].ratedShipmentDetails[0].totalNetFedExCharge : '';
 }
-
-
 
 /// Test script ///
 $("#token_access_btn").click(function () {

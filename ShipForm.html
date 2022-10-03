@@ -29,8 +29,9 @@
     <label>Width: </label><input type="text" id="Width" size="5" name="Width" /><br /><br />
     <label>UPS: </label><input type="radio" id="UPS" name="ShipMethod" checked />&nbsp;&nbsp;
     &nbsp; <label>FedEx: </label><input type="radio" id="FedEx" name="ShipMethod" />&nbsp;&nbsp;
-    &nbsp; <label>Ground (FREE): </label><input type="radio" id="Ground" name="ShipMethod" /><br /><br />
-    <div id="service_method_wrapper" style="display: none;">
+    <!-- &nbsp; <label>Ground (FREE): </label><input type="radio" id="Ground" name="ShipMethod" /> -->
+    <br />
+    <!-- <div id="service_method_wrapper" style="display: none;">
       <label>FedEx First Overnight</label><input type="radio" id="fedex_fo" name="fedex_service_type" checked><br />
       <label>FedEx Priority Overnight</label><input type="radio" id="fedex_fpo" name="fedex_service_type"><br />
       <label>FedEx Standard Overnight</label><input type="radio" id="fedex_fso" name="fedex_service_type"><br />
@@ -38,7 +39,17 @@
       <label>FedEx 2Day</label><input type="radio" id="fedex_f2" name="fedex_service_type"><br />
       <label>FedEx Express Saver</label><input type="radio" id="fedex_fes" name="fedex_service_type"><br />
       <label>FedEx Ground</label><input type="radio" id="fedex_fg" name="fedex_service_type"><br />
-    </div>
+    </div> -->
+    <select id="service_method_wrapper" style="display: none;">
+      <option value = 'fedex_fo'>FedEx First Overnight</option>
+      <option value = 'fedex_fpo'>FedEx Priority Overnight</option>
+      <option value = 'fedex_fso'>FedEx Standard Overnight</option>
+      <option value = 'fedex_f2a'>FedEx 2Day AM</option>
+      <option value = 'fedex_f2'>FedEx 2Day</option>
+      <option value = 'fedex_fes'>FedEx Express Saver</option>
+      <option value = 'fedex_fg'>FedEx Ground</option>
+    </select>
+    <br />
     <label>Price: </label><input readonly type="text" id="price" size="5" name="price" /><br /><br />
     <input type="submit" value="Submit" />
   </form>
