@@ -26,7 +26,7 @@ function CallAPI($method, $url, $requestHeader, $requestBody = false)
     curl_setopt($curl, CURLOPT_URL, $url);
 
     $result = curl_exec($curl);
-
+    // echo json_encode(curl_getinfo($curl));
     curl_close($curl);
     return $result;
 }

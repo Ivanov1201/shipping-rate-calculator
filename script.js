@@ -16,8 +16,8 @@ $("#main_form").submit(function (e) {
 
   $.ajax({
     method: "POST",
-    // url: "server.php",
-    url: "https://cors-everywhere-1.herokuapp.com/https://dev.extrahelp.us/shipcalc/server.php",
+    url: "server.php",
+    // url: "https://cors-everywhere-1.herokuapp.com/https://dev.extrahelp.us/shipcalc/server.php",
     data: {
       AddressLine_from: $("#AddressLine_From").val(),
       City_From: $("#City_From").val(),
