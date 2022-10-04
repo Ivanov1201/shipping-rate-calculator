@@ -3,13 +3,17 @@ $("#main_form").submit(function (e) {
   get_value();
 });
 
-function valid_input() {
-
+function isValidJSONString(str) {
+  try {
+      JSON.parse(str);
+  } catch (e) {
+      return false;
+  }
   return true;
 }
 
 function get_value() {
-
+  clear_error();
   let method = -1; // Ground
   let service_type = '-1';
   if ($("#UPS").prop("checked")) {
@@ -21,7 +25,7 @@ function get_value() {
   } else if ($("#Ground").prop("checked")){
     method = 2; //Ground
   } else {
-    alert("Please select the method");
+    set_error("Please select the method");
     return;
   }
 
@@ -41,7 +45,6 @@ function get_value() {
     method: method,
     service_type: service_type
   };
-  console.log(Object.values(request_data).includes(''));
   if (Object.values(request_data).includes('')) return;
   $("#price").val('');
   $.ajax({
@@ -50,6 +53,11 @@ function get_value() {
     // url: "https://cors-everywhere-1.herokuapp.com/https://dev.extrahelp.us/shipcalc/server.php",
     data: request_data,
     success: function (result) {
+      
+      if (!isValidJSONString(result)) {
+        set_error("Error occured while requesting");
+        return;
+      }
       let response = JSON.parse(result);
       console.log(response);
       handle_response(method, response);
@@ -80,13 +88,13 @@ $("#ups_service_method_wrapper").change(function() {
   get_value();
 });
 
-let fedex_response = null;
-
 function handle_response(method, response) {
   let result;
   if (method == 0) {
     result = response?.RateResponse?.RatedShipment?.TotalCharges?.MonetaryValue || '';
-
+    if (response?.response?.errors) {
+      set_error(response.response.errors[0].message+"\n Please try again.");
+    }
   } else if(method == 1) {
     result = response?.output?.rateReplyDetails[0]?.ratedShipmentDetails[0]?.totalNetFedExCharge || '';
   } else if (method == 2) {
@@ -101,6 +109,16 @@ function handle_fedex_response() {
   let service_type = $("#fedex_service_method_wrapper").val();
   let fedex_service_type_id = fedex_service_types.indexOf(service_type);
   return (fedex_service_type_id >= 0) ? fedex_response[fedex_service_type_id].ratedShipmentDetails[0].totalNetFedExCharge : '';
+}
+
+function clear_error() {
+  $("#error_line").html('');
+  $("#error_line").hide();
+}
+
+function set_error(error = 'error') {
+  $("#error_line").show();
+  $("#error_line").html(error);
 }
 
 /// Test script ///
