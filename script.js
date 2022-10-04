@@ -43,7 +43,7 @@ function get_value() {
   };
   console.log(Object.values(request_data).includes(''));
   if (Object.values(request_data).includes('')) return;
-  
+  $("#price").val('');
   $.ajax({
     method: "POST",
     url: "server.php",
@@ -86,10 +86,9 @@ function handle_response(method, response) {
   let result;
   if (method == 0) {
     result = response?.RateResponse?.RatedShipment?.TotalCharges?.MonetaryValue || '';
+
   } else if(method == 1) {
-    fedex_response = response?.output?.rateReplyDetails;
-    // result = handle_fedex_response();
-    result = "FEDEX";
+    result = response?.output?.rateReplyDetails[0]?.ratedShipmentDetails[0]?.totalNetFedExCharge || '';
   } else if (method == 2) {
     result = 0;
   }

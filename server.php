@@ -96,8 +96,8 @@ function test_fedex_token() {
 function get_fedex_rate() {
   global $param;
  
-  // $token = get_fedex_token();
-  $token = 'get_fedex_token()';
+  $token = get_fedex_token();
+  // $token = 'get_fedex_token()';
 
   $requestBody = json_decode(file_get_contents('Fedex.json'));
   $requestBody->accountNumber->value = "NEED_TO_BE_UPDATED";
