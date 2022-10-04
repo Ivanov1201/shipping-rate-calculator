@@ -55,7 +55,7 @@ function get_value() {
     success: function (result) {
       
       if (!isValidJSONString(result)) {
-        set_error("Error occured while requesting");
+        set_error("Error occured while requesting. Please try again.");
         return;
       }
       let response = JSON.parse(result);
@@ -93,7 +93,7 @@ function handle_response(method, response) {
   if (method == 0) {
     result = response?.RateResponse?.RatedShipment?.TotalCharges?.MonetaryValue || '';
     if (response?.response?.errors) {
-      set_error(response.response.errors[0].message+"\n Please try again.");
+      set_error(response.response.errors[0].message);
     }
   } else if(method == 1) {
     result = response?.output?.rateReplyDetails[0]?.ratedShipmentDetails[0]?.totalNetFedExCharge || '';
