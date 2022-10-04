@@ -1,12 +1,23 @@
 $("#main_form").submit(function (e) {
-
   e.preventDefault();
+  get_value();
+});
+
+function valid_input() {
+
+  return true;
+}
+
+function get_value() {
+
   let method = -1; // Ground
+  let service_type = '-1';
   if ($("#UPS").prop("checked")) {
     method = 0; // UPS
+    service_type = $("#ups_service_method_wrapper").val();
   } else if ($("#FedEx").prop("checked")) {
     method = 1; //FeDex
-    fedex_response = null;
+    service_type = $("#fedex_service_method_wrapper").val();
   } else if ($("#Ground").prop("checked")){
     method = 2; //Ground
   } else {
@@ -14,25 +25,30 @@ $("#main_form").submit(function (e) {
     return;
   }
 
+  let request_data = {
+    AddressLine_from: $("#AddressLine_From").val(),
+    City_From: $("#City_From").val(),
+    StateProvinceCode_From: $("#StateProvinceCode_From").val(),
+    PostalCode_From: $("#PostalCode_From").val(),
+    AddressLine_To: $("#AddressLine_To").val(),
+    City_To: $("#City_To").val(),
+    StateProvinceCode_To: $("#StateProvinceCode_To").val(),
+    PostalCode_To: $("#PostalCode_To").val(),
+    weight: $("#weight").val(),
+    Height: $("#Height").val(),
+    Length: $("#Length").val(),
+    Width: $("#Width").val(),
+    method: method,
+    service_type: service_type
+  };
+  console.log(Object.values(request_data).includes(''));
+  if (Object.values(request_data).includes('')) return;
+  
   $.ajax({
     method: "POST",
     url: "server.php",
     // url: "https://cors-everywhere-1.herokuapp.com/https://dev.extrahelp.us/shipcalc/server.php",
-    data: {
-      AddressLine_from: $("#AddressLine_From").val(),
-      City_From: $("#City_From").val(),
-      StateProvinceCode_From: $("#StateProvinceCode_From").val(),
-      PostalCode_From: $("#PostalCode_From").val(),
-      AddressLine_To: $("#AddressLine_To").val(),
-      City_To: $("#City_To").val(),
-      StateProvinceCode_To: $("#StateProvinceCode_To").val(),
-      PostalCode_To: $("#PostalCode_To").val(),
-      weight: $("#weight").val(),
-      Height: $("#Height").val(),
-      Length: $("#Length").val(),
-      Width: $("#Width").val(),
-      method: method
-    },
+    data: request_data,
     success: function (result) {
       let response = JSON.parse(result);
       console.log(response);
@@ -42,31 +58,38 @@ $("#main_form").submit(function (e) {
       console.log("ERROR:", error);
     }
   });
-});
+}
 
 $("input:radio[name='ShipMethod']").change(function() {
+  $("#ups_service_method_wrapper").hide();
+  $("#fedex_service_method_wrapper").hide();
+
   if ($(this).attr('id') == "FedEx") {
-    $("#service_method_wrapper").show();
-  } else {
-    $("#service_method_wrapper").hide();
+    $("#fedex_service_method_wrapper").show();
+  } else if ($(this).attr('id') == "UPS"){
+    $("#ups_service_method_wrapper").show();
   }
+  get_value();
 });
 
-$("#service_method_wrapper").change(function() {
-  handle_fedex_response();
+$("#fedex_service_method_wrapper").change(function() {
+  get_value();
+});
+
+$("#ups_service_method_wrapper").change(function() {
+  get_value();
 });
 
 let fedex_response = null;
 
 function handle_response(method, response) {
-  $("#service_method_wrapper").hide();
   let result;
   if (method == 0) {
     result = response?.RateResponse?.RatedShipment?.TotalCharges?.MonetaryValue || '';
   } else if(method == 1) {
-    $("#service_method_wrapper").show();
     fedex_response = response?.output?.rateReplyDetails;
-    result = handle_fedex_response();
+    // result = handle_fedex_response();
+    result = "FEDEX";
   } else if (method == 2) {
     result = 0;
   }
@@ -76,7 +99,7 @@ function handle_response(method, response) {
 function handle_fedex_response() {
   if (!fedex_response) return;
   let fedex_service_types  = ['fedex_fo', 'fedex_fpo', 'fedex_fso', 'fedex_f2a', 'fedex_f2', 'fedex_fes', 'fedex_fg'];
-  let service_type = $("#service_method_wrapper").val();
+  let service_type = $("#fedex_service_method_wrapper").val();
   let fedex_service_type_id = fedex_service_types.indexOf(service_type);
   return (fedex_service_type_id >= 0) ? fedex_response[fedex_service_type_id].ratedShipmentDetails[0].totalNetFedExCharge : '';
 }

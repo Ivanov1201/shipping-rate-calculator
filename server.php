@@ -31,6 +31,8 @@ function CallAPI($method, $url, $requestHeader, $requestBody = false)
     return $result;
 }
 
+//
+
 function get_ups_rate() {
   global $param;
   $requestBody = json_decode(file_get_contents('UPS.json'));
@@ -49,6 +51,19 @@ function get_ups_rate() {
   $requestBody->RateRequest->Shipment->Package->Dimensions->Length = $param['Length'];
   $requestBody->RateRequest->Shipment->Package->Dimensions->Width = $param['Width'];
   $requestBody->RateRequest->Shipment->Package->PackageWeight->Weight = $param['weight'];
+
+  $ups_service_description = (object) [
+    '01' => 'Next Day Air',
+    '02' => '2nd Day Air',
+    '03' => 'Ground',
+    '12' => '3 Day Select',
+    '13' => 'Next Day Air Saver',
+    '14' => 'UPS Next Day Air Early',
+    '59' => '2nd Day Air A.M.',
+  ];
+  
+  $requestBody->RateRequest->Shipment->Service->Code = $param['service_type'];
+  $requestBody->RateRequest->Shipment->Service->Description = $ups_service_description->{$param['service_type']};
 
   $UPS_API_ENDPOINT = "https://onlinetools.ups.com/ship/v1/rating/Rate";
   $requestHeader = array(
@@ -78,17 +93,18 @@ function test_fedex_token() {
   echo get_fedex_token();
 }
 
-
 function get_fedex_rate() {
   global $param;
  
-  $token = get_fedex_token();
+  // $token = get_fedex_token();
+  $token = 'get_fedex_token()';
 
   $requestBody = json_decode(file_get_contents('Fedex.json'));
   $requestBody->accountNumber->value = "NEED_TO_BE_UPDATED";
   $requestBody->requestedShipment->shipper->address->postalCode = $param['PostalCode_From'];
   $requestBody->requestedShipment->recipient->address->postalCode = $param['PostalCode_To'];
   $requestBody->requestedShipment->requestedPackageLineItems[0]->weight->value = $param['weight'];
+  $requestBody->requestedShipment->serviceType = $param['service_type'];
   $requestHeader = array (
     "Content-Type: application/json",
     "authorization: Bearer ".$token

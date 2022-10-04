@@ -11,17 +11,20 @@
   <h1>Shipping Calculator</h1>
   <form style="line-height: 1.5em" name="ship" method="post" action="" id="main_form">
     <label>From::</label><br />
-    <label>AddressLine:&nbsp;</label><input type="text" id="AddressLine_From" size="25" name="AddressLine_From" />&nbsp;&nbsp;
-    <label>City:&nbsp;</label><input type="text" id="City_From" size="15" name="City_From" />&nbsp;&nbsp;
-    <label>StateProvinceCode:&nbsp;</label><input type="text" id="StateProvinceCode_From" size="5" name="StateProvinceCode_From" />&nbsp;&nbsp;
-    <label>PostalCode:&nbsp;</label><input type="text" id="PostalCode_From" size="5" name="PostalCode_From" /><br /><br />
-    
+    <label>AddressLine:&nbsp;</label><input type="text" id="AddressLine_From" size="25"
+      name="AddressLine_From" />&nbsp;&nbsp; <label>City:&nbsp;</label><input type="text" id="City_From" size="15"
+      name="City_From" />&nbsp;&nbsp; <label>StateProvinceCode:&nbsp;</label><input type="text"
+      id="StateProvinceCode_From" size="5" name="StateProvinceCode_From" />&nbsp;&nbsp;
+    <label>PostalCode:&nbsp;</label><input type="text" id="PostalCode_From" size="5"
+      name="PostalCode_From" /><br /><br />
+
     <label>To::</label><br />
-    <label>AddressLine:&nbsp;</label><input type="text" id="AddressLine_To" size="25" name="AddressLine_To" />&nbsp;&nbsp;
-    <label>City:&nbsp;</label><input type="text" id="City_To" size="15" name="City_To" />&nbsp;&nbsp;
-    <label>StateProvinceCode:&nbsp;</label><input type="text" id="StateProvinceCode_To" size="5" name="StateProvinceCode_To" />&nbsp;&nbsp;
-    <label>PostalCode:&nbsp;</label><input type="text" id="PostalCode_To" size="5" name="PostalCode_To" /><br /><br />
-    
+    <label>AddressLine:&nbsp;</label><input type="text" id="AddressLine_To" size="25"
+      name="AddressLine_To" />&nbsp;&nbsp; <label>City:&nbsp;</label><input type="text" id="City_To" size="15"
+      name="City_To" />&nbsp;&nbsp;
+    <label>StateProvinceCode:&nbsp;</label><input type="text" id="StateProvinceCode_To" size="5"
+      name="StateProvinceCode_To" />&nbsp;&nbsp; <label>PostalCode:&nbsp;</label><input type="text" id="PostalCode_To"
+      size="5" name="PostalCode_To" /><br /><br />
 
     <label>Weight: </label><input type="text" size="5" id="weight" name="weight" />
     <label>Height: </label><input type="text" size="5" id="Height" name="Height" />
@@ -29,25 +32,25 @@
     <label>Width: </label><input type="text" id="Width" size="5" name="Width" /><br /><br />
     <label>UPS: </label><input type="radio" id="UPS" name="ShipMethod" checked />&nbsp;&nbsp;
     &nbsp; <label>FedEx: </label><input type="radio" id="FedEx" name="ShipMethod" />&nbsp;&nbsp;
-    <!-- &nbsp; <label>Ground (FREE): </label><input type="radio" id="Ground" name="ShipMethod" /> -->
+    &nbsp; <label>Ground (FREE): </label><input type="radio" id="Ground" name="ShipMethod" />
     <br />
-    <!-- <div id="service_method_wrapper" style="display: none;">
-      <label>FedEx First Overnight</label><input type="radio" id="fedex_fo" name="fedex_service_type" checked><br />
-      <label>FedEx Priority Overnight</label><input type="radio" id="fedex_fpo" name="fedex_service_type"><br />
-      <label>FedEx Standard Overnight</label><input type="radio" id="fedex_fso" name="fedex_service_type"><br />
-      <label>FedEx 2Day AM</label><input type="radio" id="fedex_f2a" name="fedex_service_type"><br />
-      <label>FedEx 2Day</label><input type="radio" id="fedex_f2" name="fedex_service_type"><br />
-      <label>FedEx Express Saver</label><input type="radio" id="fedex_fes" name="fedex_service_type"><br />
-      <label>FedEx Ground</label><input type="radio" id="fedex_fg" name="fedex_service_type"><br />
-    </div> -->
-    <select id="service_method_wrapper" style="display: none;">
-      <option value = 'fedex_fg'>FedEx Ground</option>
-      <option value = 'fedex_fes'>FedEx Express Saver</option>
-      <option value = 'fedex_f2'>FedEx 2Day</option>
-      <option value = 'fedex_f2a'>FedEx 2Day AM</option>
-      <option value = 'fedex_fso'>FedEx Standard Overnight</option>
-      <option value = 'fedex_fpo'>FedEx Priority Overnight</option>
-      <option value = 'fedex_fo'>FedEx First Overnight</option>
+    <select id="ups_service_method_wrapper">
+      <option value="01">Next Day Air </option>
+      <option value="02">2nd Day Air </option>
+      <option value="03">Ground </option>
+      <option value="12">3 Day Select</option>
+      <option value="13">Next Day Air Saver</option>
+      <option value="14">UPS Next Day Air Early</option>
+      <option value="59">2nd Day Air A.M.</option>
+    </select>
+    <select id="fedex_service_method_wrapper" style="display: none">
+      <option value="FEDEX_GROUND">FedEx Ground</option>
+      <option value="EXPRESS_SAVER">FedEx Express Saver</option>
+      <option value="FEDEX_2_DAY">FedEx 2Day</option>
+      <option value="FEDEX_2_DAY_AM">FedEx 2Day AM</option>
+      <option value="STANDARD_OVERNIGHT">FedEx Standard Overnight</option>
+      <option value="PRIORITY_OVERNIGHT">FedEx Priority Overnight</option>
+      <option value="FIRST_OVERNIGHT">FedEx First Overnight</option>
     </select>
     <br />
     <label>Price: </label><input readonly type="text" id="price" size="5" name="price" /><br /><br />
