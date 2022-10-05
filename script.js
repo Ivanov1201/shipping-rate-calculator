@@ -1,5 +1,9 @@
-$("#main_form").submit(function (e) {
-  e.preventDefault();
+// $("#main_form").submit(function (e) {
+//   e.preventDefault();
+//   get_value();
+// });
+
+$(document).ready(function() {
   get_value();
 });
 
@@ -22,8 +26,8 @@ function get_value() {
   } else if ($("#FedEx").prop("checked")) {
     method = 1; //FeDex
     service_type = $("#fedex_service_method_wrapper").val();
-  } else if ($("#Ground").prop("checked")){
-    method = 2; //Ground
+  // } else if ($("#Ground").prop("checked")){
+  //   method = 2; //Ground
   } else {
     set_error("Please select the method");
     return;
@@ -97,18 +101,11 @@ function handle_response(method, response) {
     }
   } else if(method == 1) {
     result = response?.output?.rateReplyDetails[0]?.ratedShipmentDetails[0]?.totalNetFedExCharge || '';
-  } else if (method == 2) {
-    result = 0;
-  }
+  } 
+  // else if (method == 2) {
+  //   result = 0;
+  // }
   $("#price").val(result);
-}
-
-function handle_fedex_response() {
-  if (!fedex_response) return;
-  let fedex_service_types  = ['fedex_fo', 'fedex_fpo', 'fedex_fso', 'fedex_f2a', 'fedex_f2', 'fedex_fes', 'fedex_fg'];
-  let service_type = $("#fedex_service_method_wrapper").val();
-  let fedex_service_type_id = fedex_service_types.indexOf(service_type);
-  return (fedex_service_type_id >= 0) ? fedex_response[fedex_service_type_id].ratedShipmentDetails[0].totalNetFedExCharge : '';
 }
 
 function clear_error() {
@@ -122,20 +119,20 @@ function set_error(error = 'error') {
 }
 
 /// Test script ///
-$("#token_access_btn").click(function () {
-  $.ajax({
-    method: "POST",
-    url: "server.php",
-    data: {
-      method: 3 // this means we request fedex token
-    },
-    success: function (result) {
-      let response = JSON.parse(result);
-      console.log(response);
+// $("#token_access_btn").click(function () {
+//   $.ajax({
+//     method: "POST",
+//     url: "server.php",
+//     data: {
+//       method: 3 // this means we request fedex token
+//     },
+//     success: function (result) {
+//       let response = JSON.parse(result);
+//       console.log(response);
       
-    },
-    error: function (error) {
-      console.log("ERROR:", error);
-    }
-  });
-})
+//     },
+//     error: function (error) {
+//       console.log("ERROR:", error);
+//     }
+//   });
+// })

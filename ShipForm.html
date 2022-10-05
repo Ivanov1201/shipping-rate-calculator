@@ -12,27 +12,27 @@
   <form style="line-height: 1.5em" name="ship" method="post" action="" id="main_form">
     <label>From::</label><br />
     <label>AddressLine:&nbsp;</label><input type="text" id="AddressLine_From" size="25"
-      name="AddressLine_From" />&nbsp;&nbsp; <label>City:&nbsp;</label><input type="text" id="City_From" size="15"
-      name="City_From" />&nbsp;&nbsp; <label>StateProvinceCode:&nbsp;</label><input type="text"
-      id="StateProvinceCode_From" size="5" name="StateProvinceCode_From" />&nbsp;&nbsp;
+      name="AddressLine_From" value = "1814 College Pkwy"/>&nbsp;&nbsp; <label>City:&nbsp;</label><input type="text" id="City_From" size="15"
+      name="City_From" value = "Lewisville"/>&nbsp;&nbsp; <label>StateProvinceCode:&nbsp;</label><input type="text"
+      id="StateProvinceCode_From" size="5" name="StateProvinceCode_From" value = "TX"/>&nbsp;&nbsp;
     <label>PostalCode:&nbsp;</label><input type="text" id="PostalCode_From" size="5"
-      name="PostalCode_From" /><br /><br />
+      name="PostalCode_From" value = "75077"/><br /><br />
 
     <label>To::</label><br />
     <label>AddressLine:&nbsp;</label><input type="text" id="AddressLine_To" size="25"
-      name="AddressLine_To" />&nbsp;&nbsp; <label>City:&nbsp;</label><input type="text" id="City_To" size="15"
-      name="City_To" />&nbsp;&nbsp;
+      name="AddressLine_To" value = "13188 Cardinal Creek Road"/>&nbsp;&nbsp; <label>City:&nbsp;</label><input type="text" id="City_To" size="15"
+      name="City_To" value = "Eden Prairie"/>&nbsp;&nbsp;
     <label>StateProvinceCode:&nbsp;</label><input type="text" id="StateProvinceCode_To" size="5"
-      name="StateProvinceCode_To" />&nbsp;&nbsp; <label>PostalCode:&nbsp;</label><input type="text" id="PostalCode_To"
-      size="5" name="PostalCode_To" /><br /><br />
+      name="StateProvinceCode_To" value = "MN"/>&nbsp;&nbsp; <label>PostalCode:&nbsp;</label><input type="text" id="PostalCode_To"
+      size="5" name="PostalCode_To" value="55346"/><br /><br />
 
-    <label>Weight: </label><input type="text" size="5" id="weight" name="weight" />
-    <label>Height: </label><input type="text" size="5" id="Height" name="Height" />
-    <label>Length: </label><input type="text" size="5" id="Length" name="Length" />
-    <label>Width: </label><input type="text" id="Width" size="5" name="Width" /><br /><br />
+    <label>Weight: </label><input type="text" size="5" id="weight" name="weight" value="10"/>
+    <label>Height: </label><input type="text" size="5" id="Height" name="Height" value="10" />
+    <label>Length: </label><input type="text" size="5" id="Length" name="Length" value="5" />
+    <label>Width: </label><input type="text" id="Width" size="5" name="Width" value="7" /><br /><br />
     <label>UPS: </label><input type="radio" id="UPS" name="ShipMethod" checked />&nbsp;&nbsp;
     &nbsp; <label>FedEx: </label><input type="radio" id="FedEx" name="ShipMethod" />&nbsp;&nbsp;
-    &nbsp; <label>Ground (FREE): </label><input type="radio" id="Ground" name="ShipMethod" />
+    <!-- &nbsp; <label>Ground (FREE): </label><input type="radio" id="Ground" name="ShipMethod" /> -->
     <br />
     <select id="ups_service_method_wrapper">
       <option value="03">Ground </option>
@@ -55,7 +55,7 @@
     <br />
     <label>Price: </label><input readonly type="text" id="price" size="5" name="price" /><br /><br />
     <label id="error_line" style="display: none; color: red;">Error</label><br />
-    <input type="submit" value="Submit" />
+    <!-- <input type="submit" value="Submit" /> -->
   </form>
   <script src="script.js"></script>
 </body>
