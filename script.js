@@ -48,8 +48,7 @@ function get_value() {
   $("#price").val('');
   $.ajax({
     method: "POST",
-    // url: "server.php",
-    url: "https://cors-everywhere-1.herokuapp.com/https://dev.extrahelp.us/shipcalc/server.php",
+    url: "server.php",
     data: request_data,
     success: function (result) {
       
