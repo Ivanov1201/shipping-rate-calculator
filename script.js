@@ -1,8 +1,3 @@
-// $("#main_form").submit(function (e) {
-//   e.preventDefault();
-//   get_value();
-// });
-
 $(document).ready(function() {
   get_value();
 });
@@ -53,8 +48,8 @@ function get_value() {
   $("#price").val('');
   $.ajax({
     method: "POST",
-    url: "server.php",
-    // url: "https://cors-everywhere-1.herokuapp.com/https://dev.extrahelp.us/shipcalc/server.php",
+    // url: "server.php",
+    url: "https://cors-everywhere-1.herokuapp.com/https://dev.extrahelp.us/shipcalc/server.php",
     data: request_data,
     success: function (result) {
       
@@ -102,9 +97,6 @@ function handle_response(method, response) {
   } else if(method == 1) {
     result = response?.output?.rateReplyDetails[0]?.ratedShipmentDetails[0]?.totalNetFedExCharge || '';
   } 
-  // else if (method == 2) {
-  //   result = 0;
-  // }
   $("#price").val(result);
 }
 
@@ -117,22 +109,3 @@ function set_error(error = 'error') {
   $("#error_line").show();
   $("#error_line").html(error);
 }
-
-/// Test script ///
-// $("#token_access_btn").click(function () {
-//   $.ajax({
-//     method: "POST",
-//     url: "server.php",
-//     data: {
-//       method: 3 // this means we request fedex token
-//     },
-//     success: function (result) {
-//       let response = JSON.parse(result);
-//       console.log(response);
-      
-//     },
-//     error: function (error) {
-//       console.log("ERROR:", error);
-//     }
-//   });
-// })
