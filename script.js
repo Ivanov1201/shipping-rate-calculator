@@ -21,8 +21,6 @@ function get_value() {
   } else if ($("#FedEx").prop("checked")) {
     method = 1; //FeDex
     service_type = $("#fedex_service_method_wrapper").val();
-  // } else if ($("#Ground").prop("checked")){
-  //   method = 2; //Ground
   } else {
     set_error("Please select the method");
     return;
