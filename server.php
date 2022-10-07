@@ -89,10 +89,6 @@ function get_fedex_token() {
   return json_decode($response)->access_token;
 }
 
-function test_fedex_token() {
-  echo get_fedex_token();
-}
-
 function get_fedex_rate() {
   global $param;
  
